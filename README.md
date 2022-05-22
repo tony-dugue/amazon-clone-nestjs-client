@@ -1,46 +1,61 @@
-# Getting Started with Create React App
+## Présentation du projet
+***
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Client en REACT / Typescript du test d'application de e-commerce inspiré du site Amazon utilisant en API
+le framework backend NESTJS avec une authentification JWT et l'utilisation d'une
+base de données en MongoDB (techno utilisées : Docker, MongoDB, Mongoose, mongo-express)
 
-## Available Scripts
+Ce projet a été initialisé avec le starter de la CLI [Create React App](https://github.com/facebook/create-react-app).
 
-In the project directory, you can run:
 
-### `npm start`
+## 🚀 Installation du projet
+***
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- récupération du projet sur Github par HTTPS :
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+```shell script
+$ https://github.com/tony-dugue/amazon-clone-nestjs-client.git
+```
 
-### `npm test`
+- installer les packages :
+```shell script
+$ yarn install
+```
+ou `npm install`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Démarrer l'application
+***
+Pour démarrer le serveur de développement (à la racine du projet) :
+```bash
+npm run start
+# ou
+yarn start
+```
 
-### `npm run build`
+Pour lancer le projet dans le navigateur (en mode développeur) :
+[http://localhost:3000](http://localhost:3000)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+(la page se rechargera lors des modifications.
+Les lint Errors seront visible dans le terminal.)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Mise en production
+***
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Préparer le projet pour le déploiement :
 
-### `npm run eject`
+```bash
+npm run build
+# ou
+yarn build
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Ressources utilisées dans le projet
+***
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Librairies utilisées dans ce projet :
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Router : [react-router-dom](https://www.npmjs.com/package/react-router-dom) <br />
+React components UI : [Material-UI](https://mui.com/) <br />
+Icons : [Material Icons](https://mui.com/material-ui/material-icons/) <br />
+Styled Components : [emotion/styled](https://emotion.sh/docs/introduction) <br />
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
