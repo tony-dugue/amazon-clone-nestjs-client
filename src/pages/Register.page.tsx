@@ -1,8 +1,8 @@
+import AuthLayout from "../features/auth/AuthLayout";
+
 const RegisterPage = () => {
   return (
-   <div>
-    Register Page
-   </div>
+   <AuthLayout>Register Page</AuthLayout>
   )
 }
 
