@@ -2,11 +2,67 @@ import { FC, FormEvent } from 'react'
 import { Box, Grid, TextField, InputLabel, Typography, Button, Divider } from "@mui/material";
 import {Link} from "react-router-dom";
 
+import useInput from "../../../hooks/input/use-inputs";
+import {validateNameLength, validatePasswordLength} from "../../../shared/utils/validation/length";
+import {validateEmail} from "../../../shared/utils/validation/email";
+import {NewUser} from "../models/NewUser";
+
 const RegistrationFormComponent: FC = () => {
+
+  /* ========== Fields Validation ============ */
+  const {
+    text: name,
+    shouldDisplayError: nameHasError,
+    textChangeHandler: nameChangeHandler,
+    inputBlurHandler: nameBlurHandler,
+    clearHandler: nameClearHandler,
+  } = useInput(validateNameLength)
+
+  const {
+    text: email,
+    shouldDisplayError: emailHasError,
+    textChangeHandler: emailChangeHandler,
+    inputBlurHandler: emailBlurHandler,
+    clearHandler: emailClearHandler,
+  } = useInput(validateEmail)
+
+  const {
+    text: password,
+    shouldDisplayError: passwordHasError,
+    textChangeHandler: passwordChangeHandler,
+    inputBlurHandler: passwordBlurHandler,
+    clearHandler: passwordClearHandler,
+  } = useInput(validatePasswordLength)
+
+  const {
+    text: confirmPassword,
+    shouldDisplayError: confirmPasswordHasError,
+    textChangeHandler: confirmPasswordChangeHandler,
+    inputBlurHandler: confirmPasswordBlurHandler,
+    clearHandler: confirmPasswordClearHandler,
+  } = useInput(validatePasswordLength)
+
+  /* =================================================== */
+
+  const clearForm = () => {
+    nameClearHandler();
+    emailClearHandler();
+    passwordClearHandler();
+    confirmPasswordClearHandler();
+  }
 
   const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('Clicked!')
+
+    if (password !== confirmPassword) return;
+    if (nameHasError || emailHasError || passwordHasError || confirmPasswordHasError) return;
+    if (name.length === 0 || email.length === 0 || password.length === 0 || confirmPassword.length === 0) return;
+
+    const newUser: NewUser = { name, email, password }
+
+    console.log('NEW USER', newUser)
+
+    clearForm()
   }
 
   return (
@@ -17,16 +73,64 @@ const RegistrationFormComponent: FC = () => {
         <Typography variant='h4' component='h1'>Créer un compte</Typography>
 
         <InputLabel sx={{ fontWeight: 500, marginTop: 1, color: '#000000' }} htmlFor='name'>Votre nom</InputLabel>
-        <TextField type='text' name='name' id='name' variant='outlined' size='small' placeholder='Prénom Nom'/>
+
+        <TextField
+          value={name}
+          onChange={nameChangeHandler}
+          onBlur={nameBlurHandler}
+          error={nameHasError}
+          helperText={nameHasError ? 'Saisir votre nom' : ''}
+          type='text'
+          name='name'
+          id='name'
+          variant='outlined'
+          size='small'
+          placeholder='Prénom Nom'
+        />
 
         <InputLabel sx={{ fontWeight: 500, marginTop: 1, color: '#000000' }} htmlFor='email'>Adresse e-mail</InputLabel>
-        <TextField type='text' name='email' id='email' variant='outlined' size='small' />
+
+        <TextField
+          value={email}
+          onChange={emailChangeHandler}
+          onBlur={emailBlurHandler}
+          error={emailHasError}
+          helperText={emailHasError ? 'Saisir votre email' : ''}
+          type='email'
+          name='email'
+          id='email'
+          variant='outlined'
+          size='small'
+        />
 
         <InputLabel sx={{ fontWeight: 500, marginTop: 1, color: '#000000' }} htmlFor='password'>Mot de passe</InputLabel>
-        <TextField type='text' name='password' id='password' variant='outlined' size='small' placeholder='Au moins 6 caractères' />
+
+        <TextField
+          value={password}
+          onChange={passwordChangeHandler}
+          onBlur={passwordBlurHandler}
+          error={passwordHasError}
+          helperText={passwordHasError ? '6 caractères minimum requis' : ''}
+          type='password'
+          name='password'
+          id='password'
+          variant='outlined'
+          size='small'
+          placeholder='Au moins 6 caractères' />
 
         <InputLabel sx={{ fontWeight: 500, marginTop: 1, color: '#000000' }} htmlFor='confirmPassword'>Entrer le mot de passe à nouveau</InputLabel>
-        <TextField type='text' name='confirmPassword' id='confirmPassword' variant='outlined' size='small' />
+
+        <TextField
+          value={confirmPassword}
+          onChange={confirmPasswordChangeHandler}
+          onBlur={confirmPasswordBlurHandler}
+          error={confirmPassword.length > 0 && password !== confirmPassword}
+          helperText={confirmPassword.length > 0 && password !== confirmPassword ? 'les mots de passe ne sont pas identique' : ''}
+          type='password'
+          name='confirmPassword'
+          id='confirmPassword'
+          variant='outlined'
+          size='small' />
 
         <Button
           variant='contained'
