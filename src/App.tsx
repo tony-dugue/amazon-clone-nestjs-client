@@ -18,7 +18,7 @@ function App() {
           <Route path='/' element={<PrivateRoute page={<HomePage />} />} />
           <Route path='/register' element={<RegisterPage />} />
           <Route path='/signin' element={<SigninPage />} />
-          <Route path='*' element={<Navigate to='/' />}/>
+          <Route path='*' element={<Navigate to='/' />} />
         </Routes>
       </Router>
     </ThemeProvider>
