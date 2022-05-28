@@ -98,10 +98,10 @@ const SigninFormComponent: FC = () => {
         <div style={{ marginTop: '30px' }}>
           <small>
             En passant votre commande, vous acceptez les
-            <a href="#" style={{ textDecoration: 'none' }}>{' '}Conditions générales de vente{' '}</a> d’Amazon. Veuillez consulter notre
-            <a href="#" style={{ textDecoration: 'none' }}>{' '}Notice Protection de vos Informations Personnelles</a>, notre
-            <a href="#" style={{ textDecoration: 'none' }}>{' '}Notice Cookies{' '}</a>et notre
-            <a href="#" style={{ textDecoration: 'none' }}>{' '}Notice Annonces publicitaires basées sur vos centres d’intérêt</a>.
+            <a href="/" style={{ textDecoration: 'none' }}>{' '}Conditions générales de vente{' '}</a> d’Amazon. Veuillez consulter notre
+            <a href="/" style={{ textDecoration: 'none' }}>{' '}Notice Protection de vos Informations Personnelles</a>, notre
+            <a href="/" style={{ textDecoration: 'none' }}>{' '}Notice Cookies{' '}</a>et notre
+            <a href="/" style={{ textDecoration: 'none' }}>{' '}Notice Annonces publicitaires basées sur vos centres d’intérêt</a>.
           </small>
         </div>
       </Box>

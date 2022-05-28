@@ -1,13 +1,23 @@
-import { FC, FormEvent } from 'react'
-import { Box, Grid, TextField, InputLabel, Typography, Button, Divider } from "@mui/material";
-import {Link} from "react-router-dom";
+import {FC, FormEvent, useEffect} from 'react'
+import {Box, Grid, TextField, InputLabel, Typography, Button, Divider, CircularProgress} from "@mui/material";
+import {Link, useNavigate} from "react-router-dom";
 
 import useInput from "../../../hooks/input/use-inputs";
 import {validateNameLength, validatePasswordLength} from "../../../shared/utils/validation/length";
 import {validateEmail} from "../../../shared/utils/validation/email";
 import {NewUser} from "../models/NewUser";
 
+// Redux
+import {useAppDispatch, useAppSelector} from "../../../hooks/redux/hook";
+import {register, reset} from "../authSlice";
+
 const RegistrationFormComponent: FC = () => {
+
+  const dispatch = useAppDispatch();
+
+  const { isLoading, isSuccess } = useAppSelector( (state) => state.auth);
+
+  const navigate = useNavigate();
 
   /* ========== Fields Validation ============ */
   const {
@@ -60,10 +70,18 @@ const RegistrationFormComponent: FC = () => {
 
     const newUser: NewUser = { name, email, password }
 
-    console.log('NEW USER', newUser)
-
-    clearForm()
+    dispatch(register(newUser))
   }
+
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(reset())
+      clearForm()
+      navigate('/signin')
+    }
+  }, [isSuccess, dispatch])
+
+  if (isLoading) return <CircularProgress sx={{ marginTop: '64px' }} color="primary" />
 
   return (
    <Box sx={{ border: 1, padding: 2, borderColor: '#cccccc', width: '350px', marginTop: 2 }}>
@@ -149,10 +167,10 @@ const RegistrationFormComponent: FC = () => {
     <div style={{ marginTop: '30px' }}>
       <small>
         En créant un compte, vous acceptez les
-        <a href="#" style={{ textDecoration: 'none' }}>{' '}Conditions générales de vente{' '}</a> d’Amazon. Veuillez consulter notre
-        <a href="#" style={{ textDecoration: 'none' }}>{' '}Notice Protection de vos Informations Personnelles</a>, notre
-        <a href="#" style={{ textDecoration: 'none' }}>{' '}Notice Cookies{' '}</a>et notre
-        <a href="#" style={{ textDecoration: 'none' }}>{' '}Notice Annonces publicitaires basées sur vos centres d’intérêt</a>.
+        <a href="/" style={{ textDecoration: 'none' }}>{' '}Conditions générales de vente{' '}</a> d’Amazon. Veuillez consulter notre
+        <a href="/" style={{ textDecoration: 'none' }}>{' '}Notice Protection de vos Informations Personnelles</a>, notre
+        <a href="/" style={{ textDecoration: 'none' }}>{' '}Notice Cookies{' '}</a>et notre
+        <a href="/" style={{ textDecoration: 'none' }}>{' '}Notice Annonces publicitaires basées sur vos centres d’intérêt</a>.
       </small>
     </div>
 
@@ -168,7 +186,7 @@ const RegistrationFormComponent: FC = () => {
      <div>
        <small>
          Vous achetez pour votre entreprise?
-         <a href="#" style={{ textDecoration: 'none' }}>{' '}Créez un compte professionnel gratuit</a>
+         <a href="/" style={{ textDecoration: 'none' }}>{' '}Créez un compte professionnel gratuit</a>
        </small>
      </div>
 
