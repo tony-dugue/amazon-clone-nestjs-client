@@ -109,6 +109,7 @@ const SigninFormComponent: FC = () => {
               placeholder='Au moins 6 caractères' />
 
             <Button
+              disabled={!validatePasswordLength(password) || !validateEmail(email)}
               variant='contained'
               style={{
                 marginTop: '16px', height: '31px', backgroundColor: '#f0c14b', color: 'black',
