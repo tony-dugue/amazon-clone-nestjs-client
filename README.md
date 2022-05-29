@@ -49,6 +49,25 @@ npm run build
 yarn build
 ```
 
+## Test
+***
+
+### Tests unitaires (react testing library)
+
+```bash
+npm run test
+# ou
+yarn test
+```
+
+### Tests d'intégration / e2e (Cypress)
+
+```bash
+npm run test:e2e
+# ou
+yarn test:e2e
+```
+
 ## Ressources utilisées dans le projet
 ***
 
@@ -58,4 +77,6 @@ Router : [react-router-dom](https://www.npmjs.com/package/react-router-dom) <br 
 React components UI : [Material-UI](https://mui.com/) <br />
 Icons : [Material Icons](https://mui.com/material-ui/material-icons/) <br />
 Styled Components : [emotion/styled](https://emotion.sh/docs/introduction) <br />
+State manager: [redux](https://redux.js.org/) <br />
+tests e2e : [cypress](https://cypress.io/) <br />
 
