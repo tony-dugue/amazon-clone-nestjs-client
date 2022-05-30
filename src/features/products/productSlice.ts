@@ -1,4 +1,4 @@
-import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 import {ProductDocument} from "./models/Products";
 import {Cart} from "./models/Cart";
@@ -26,6 +26,32 @@ const initialState: ProductState = {
   isError: false,
 }
 
+const modifyQtyByOne = (cart: Cart, selectedProduct: ProductDocument, modificationType: 'INCREMENT' | 'DECREMENT') => {
+
+  const previousCart = [...cart]
+  const productInCart = previousCart.find( product => product._id === selectedProduct._id)
+
+  let newCart = [];
+
+  if (!productInCart) {
+    previousCart.push({ ...selectedProduct, quantity: 1 })  // Si le produit n'est pas dans le panier, on l'ajoute
+    newCart = previousCart
+  } else {
+    const filteredCart = previousCart.filter(p => p._id !== productInCart._id) // si le produit est déjà dans le panier, on récupère que celui-ci
+
+    const modification = modificationType === 'INCREMENT' ? 1 : -1;
+
+    productInCart.quantity = productInCart.quantity + modification;
+
+    if (productInCart.quantity === 0) {
+      newCart = [...filteredCart]  // si le produit à une quantité de 0 après décrémentation, on le retire du panier
+    } else {
+      newCart = [...filteredCart, productInCart] // si le produit à une quantité > 0 après modif, on ajoute dans le panier le produit modifié
+    }
+  }
+  return newCart
+}
+
 export const getProducts = createAsyncThunk(
   'product',
   async() => {
@@ -40,7 +66,16 @@ export const getProducts = createAsyncThunk(
 export const productSlice = createSlice({
   name: 'product',
   initialState,
-  reducers: {},
+  reducers: {
+    incrementProduct: (state, action: PayloadAction<ProductDocument>) => {
+      const modifiedCart = modifyQtyByOne(state.cart, action.payload, 'INCREMENT');
+      state.cart = modifiedCart
+    },
+    decrementProduct: (state, action: PayloadAction<ProductDocument>) => {
+      const modifiedCart = modifyQtyByOne(state.cart, action.payload, 'DECREMENT');
+      state.cart = modifiedCart
+    },
+  },
   extraReducers: (builder => {
     builder
       // GET ALL PRODUCTS
@@ -60,7 +95,7 @@ export const productSlice = createSlice({
   })
 })
 
-export const { } = productSlice.actions;
+export const { incrementProduct, decrementProduct } = productSlice.actions;
 
 export default productSlice.reducer;
 
