@@ -12,7 +12,7 @@ const user: DisplayUser | null = !!storedUser ? JSON.parse(storedUser) : null
 const storedJwt: string | null = localStorage.getItem('jwt')
 const jwt: Jwt = !!storedJwt ? JSON.parse(storedJwt) : null
 
-// TODO: move higher in global => refactorisation
+// TODO: move higher in global => refactorisation (commun avec product)
 interface AsyncState {
   isLoading: boolean;
   isSuccess: boolean;
