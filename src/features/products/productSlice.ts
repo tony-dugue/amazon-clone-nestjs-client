@@ -34,19 +34,23 @@ const modifyQtyByOne = (cart: Cart, selectedProduct: ProductDocument, modificati
   let newCart = [];
 
   if (!productInCart) {
-    previousCart.push({ ...selectedProduct, quantity: 1 })  // Si le produit n'est pas dans le panier, on l'ajoute
+    // Si le produit n'est pas dans le panier, on l'ajoute
+    previousCart.push({ ...selectedProduct, quantity: 1 })
     newCart = previousCart
   } else {
-    const filteredCart = previousCart.filter(p => p._id !== productInCart._id) // si le produit est déjà dans le panier, on récupère que celui-ci
+    // si le produit est déjà dans le panier, on récupère que celui-ci
+    const filteredCart = previousCart.filter(p => p._id !== productInCart._id)
 
     const modification = modificationType === 'INCREMENT' ? 1 : -1;
 
     productInCart.quantity = productInCart.quantity + modification;
 
     if (productInCart.quantity === 0) {
-      newCart = [...filteredCart]  // si le produit à une quantité de 0 après décrémentation, on le retire du panier
+      // si le produit à une quantité de 0 après décrémentation, on le retire du panier
+      newCart = [...filteredCart]
     } else {
-      newCart = [...filteredCart, productInCart] // si le produit à une quantité > 0 après modif, on ajoute dans le panier le produit modifié
+      // si le produit à une quantité > 0 après modif, on ajoute dans le panier le produit modifié
+      newCart = [...filteredCart, productInCart]
     }
   }
   return newCart
