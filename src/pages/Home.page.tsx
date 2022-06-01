@@ -9,7 +9,7 @@ const HomePage = () => {
 
   const dispatch = useAppDispatch();
 
-  const { cart, products } = useAppSelector( state => state.product)
+  const { products } = useAppSelector( state => state.product)
 
   useEffect( () => {
     dispatch(getProducts())

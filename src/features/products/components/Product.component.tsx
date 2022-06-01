@@ -1,5 +1,5 @@
-import {FC, useState} from 'react'
-import {useAppDispatch} from "../../../hooks/redux/hook";
+import {FC} from 'react'
+import {useAppDispatch, useAppSelector} from "../../../hooks/redux/hook";
 
 import {ProductDocument} from "../models/Products"
 
@@ -14,17 +14,16 @@ const ProductComponent: FC<ProductComponentProps> = ({ product }) => {
 
   const dispatch = useAppDispatch();
 
-  const [count, setCount] = useState(0)
+  const  { cart } = useAppSelector( state => state.product)
 
-  const decrementBtn = () => {
-    setCount( (prevCount: number) => (prevCount === 0) ? 0 : prevCount - 1)
-    dispatch(decrementProduct(product))
-  }
+  let qty = 0
 
-  const incrementBtn = () => {
-    setCount( (prevCount: number) => prevCount + 1)
-    dispatch(incrementProduct(product))
-  }
+  const cartItem = cart.find( item => item._id === product._id)
+
+  if (cartItem) qty = cartItem.quantity
+
+  const decrementBtn = () => dispatch(decrementProduct(product))
+  const incrementBtn = () => dispatch(incrementProduct(product))
 
   return (
    <Card sx={{ width: 300, minWidth: 300 }}>
@@ -37,8 +36,8 @@ const ProductComponent: FC<ProductComponentProps> = ({ product }) => {
      </CardContent>
 
      <CardActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
-       <Button onClick={decrementBtn} disabled={count === 0} size='large'> - </Button>
-       <span>{count}</span>
+       <Button onClick={decrementBtn} disabled={qty === 0} size='large'> - </Button>
+       <span>{qty}</span>
        <Button onClick={incrementBtn} size='large'> + </Button>
      </CardActions>
 
